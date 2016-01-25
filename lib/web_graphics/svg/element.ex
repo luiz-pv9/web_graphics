@@ -8,13 +8,15 @@ defmodule WebGraphics.SVG.Element do
 
   ```elixir
   defmodule Square do
-    use WebGraphics.SVG.Element, tag: :rect
+    use WebGraphics.SVG.Element
 
-    attr_alias :w, :width
-    attr_alias :h, :height
+    tag :rect do
+      attr_alias :w, :width
+      attr_alias :h, :height
 
-    attr_handler :size do
-      [w: value, h: value]
+      attr_handler :size do
+        [w: value, h: value]
+      end
     end
   end
   ```

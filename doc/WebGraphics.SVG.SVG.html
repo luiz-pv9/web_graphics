@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.11.3">
-    <title>WebGraphics.SVG.Element – WebGraphics v0.0.1</title>
+    <title>WebGraphics.SVG.SVG – WebGraphics v0.0.1</title>
     <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
     <script src="dist/sidebar_items.js"></script>
   </head>
@@ -60,7 +60,7 @@
 
       <h1>
         <small class="visible-xs">WebGraphics v0.0.1</small>
-        WebGraphics.SVG.Element
+        WebGraphics.SVG.SVG
         
         
           <a href="github.com/luiz-pv9/web_graphics" title="View Source" class="view-source" rel="help">
@@ -71,20 +71,7 @@
 
       
         <section id="moduledoc" class="docstring">
-          <p>The <code class="inline">Element</code> module provides common behaviour for all SVG elements. When we
-call <code class="inline">use WebGraphics.SVG.Element</code> a few macros are imported and a simple DSL
-becomes available.</p>
-<h3>Example</h3>
-<pre><code class="elixir">defmodule Square do
-  use WebGraphics.SVG.Element, tag: :rect
-
-  attr_alias :w, :width
-  attr_alias :h, :height
-
-  attr_handler :size do
-    [w: value, h: value]
-  end
-end</code></pre>
+          <p>The SVG element is the parent wrapper for all </p>
 
         </section>
       
@@ -100,52 +87,66 @@ end</code></pre>
           
 
           
-
-          
-  <div class="summary-macros summary">
+  <div class="summary-functions summary">
     <h2>
-      <a href="#macros">Macros</a>
+      <a href="#functions">Functions</a>
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#attr_alias/2">attr_alias(name, alternative)</a>
+    <a href="#attr_alias/1">attr_alias(key)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Defines an alias <code class="inline">alternative</code> for the given <code class="inline">name</code>. This is just for convenience
-so we don’t have to type long attribute/style names</p>
+    <div class="summary-synopsis"><p>Default implementation for the <code class="inline">attr_alias</code> function. Attribute aliasing works by
+defining multiple functions with pattern matching, and this function is the “match all”
+that just returns the given key</p>
 </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#attr_handler/2">attr_handler(name, body)</a>
+    <a href="#attr_handler/2">attr_handler(, val)</a>
   </div>
   
-    <div class="summary-synopsis"><p>Defines a handler for the</p>
+    <div class="summary-synopsis"><p>Default implementation for the <code class="inline">attr_handler</code> function. Attribute handling works by
+defining multiple functions with pattern matching, and this function is the “match all”
+that just returns the given value</p>
 </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#default_attrs/1">default_attrs(attrs)</a>
+    <a href="#default_attrs/0">default_attrs()</a>
   </div>
   
-    <div class="summary-synopsis"><p>Specifies the default attributes for the element. The attributes can then be overriten
-on specific elements</p>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#elm/1">elm(attrs \\ %{})</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Returns a simple map with the given <code class="inline">attrs</code> and <code class="inline">:_module</code> that is a reference
+to the module that this function was called. This is necessary because each
+module defines different attribute aliases and handlers, and we need a way to
+get call those</p>
 </div>
   
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#tag/2">tag(tag, body)</a>
+    <a href="#get_tag/0">get_tag()</a>
   </div>
   
-    <div class="summary-synopsis"></div>
+    <div class="summary-synopsis"><p>Returns the tag specified by the user. The tag must be a valid SVG element such as
+rect, circle or path. This function is called by the rener function in the 
+ElementBuilder module</p>
+</div>
   
 </div>
 
   </div>
 
+
+          
 
           
 
@@ -155,21 +156,19 @@ on specific elements</p>
       
 
       
-
-      
-        <section id="macros" class="details-list">
+        <section id="functions" class="details-list">
           <h1 class="section-heading">
-            <a class="hover-link" href="#macros">
+            <a class="hover-link" href="#functions">
               <i class="icon-link"></i>
             </a>
-            Macros
+            Functions
           </h1>
-          <div class="detail" id="attr_alias/2">
+          <div class="detail" id="attr_alias/1">
   <div class="detail-header">
-    <a href="#attr_alias/2" class="detail-link" title="Link to this macro">
+    <a href="#attr_alias/1" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">attr_alias(name, alternative)</span>
+    <span class="signature">attr_alias(key)</span>
       
       <a href="github.com/luiz-pv9/web_graphics" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
@@ -178,17 +177,18 @@ on specific elements</p>
   </div>
   
   <section class="docstring">
-    <p>Defines an alias <code class="inline">alternative</code> for the given <code class="inline">name</code>. This is just for convenience
-so we don’t have to type long attribute/style names.</p>
+    <p>Default implementation for the <code class="inline">attr_alias</code> function. Attribute aliasing works by
+defining multiple functions with pattern matching, and this function is the “match all”
+that just returns the given key.</p>
 
   </section>
 </div>
 <div class="detail" id="attr_handler/2">
   <div class="detail-header">
-    <a href="#attr_handler/2" class="detail-link" title="Link to this macro">
+    <a href="#attr_handler/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">attr_handler(name, body)</span>
+    <span class="signature">attr_handler(, val)</span>
       
       <a href="github.com/luiz-pv9/web_graphics" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
@@ -197,16 +197,18 @@ so we don’t have to type long attribute/style names.</p>
   </div>
   
   <section class="docstring">
-    <p>Defines a handler for the </p>
+    <p>Default implementation for the <code class="inline">attr_handler</code> function. Attribute handling works by
+defining multiple functions with pattern matching, and this function is the “match all”
+that just returns the given value.</p>
 
   </section>
 </div>
-<div class="detail" id="default_attrs/1">
+<div class="detail" id="default_attrs/0">
   <div class="detail-header">
-    <a href="#default_attrs/1" class="detail-link" title="Link to this macro">
+    <a href="#default_attrs/0" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">default_attrs(attrs)</span>
+    <span class="signature">default_attrs()</span>
       
       <a href="github.com/luiz-pv9/web_graphics" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
@@ -215,17 +217,39 @@ so we don’t have to type long attribute/style names.</p>
   </div>
   
   <section class="docstring">
-    <p>Specifies the default attributes for the element. The attributes can then be overriten
-on specific elements.</p>
+    
+  </section>
+</div>
+<div class="detail" id="elm/1">
+  <div class="detail-header">
+    <a href="#elm/1" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">elm(attrs \\ %{})</span>
+      
+      <a href="github.com/luiz-pv9/web_graphics" class="view-source" rel="help" title="View Source">
+       <i class="icon-code"></i>
+     </a>
+    
+  </div>
+  
+  <section class="docstring">
+    <p>Returns a simple map with the given <code class="inline">attrs</code> and <code class="inline">:_module</code> that is a reference
+to the module that this function was called. This is necessary because each
+module defines different attribute aliases and handlers, and we need a way to
+get call those.</p>
+<p>It’s possible to build up from the returned map using the functions in the
+<a href="WebGraphics.SVG.Element.html"><code class="inline">WebGraphics.SVG.Element</code></a> module, such as <code class="inline">attr</code> and <code class="inline">style</code>. After you’re done
+setting up the element</p>
 
   </section>
 </div>
-<div class="detail" id="tag/2">
+<div class="detail" id="get_tag/0">
   <div class="detail-header">
-    <a href="#tag/2" class="detail-link" title="Link to this macro">
+    <a href="#get_tag/0" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
     </a>
-    <span class="signature">tag(tag, body)</span>
+    <span class="signature">get_tag()</span>
       
       <a href="github.com/luiz-pv9/web_graphics" class="view-source" rel="help" title="View Source">
        <i class="icon-code"></i>
@@ -234,11 +258,16 @@ on specific elements.</p>
   </div>
   
   <section class="docstring">
-    
+    <p>Returns the tag specified by the user. The tag must be a valid SVG element such as
+rect, circle or path. This function is called by the rener function in the 
+ElementBuilder module.</p>
+
   </section>
 </div>
 
         </section>
+      
+
       
 
       
