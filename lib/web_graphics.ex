@@ -1,0 +1,2 @@
+defmodule WebGraphics do
+end
